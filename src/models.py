@@ -15,9 +15,8 @@ class User(Base):
     username = Column(String(250), unique=True, nullable=False)
     firstname = Column(String(250), nullable=False)
     lastname = Column(String(250), nullable=False)
-    email_id = Column(Integer, ForeignKey('email.id'), nullable=False)  # Uno a Uno: Un usuario tiene un correo electrónico
-    email = relationship('Email', back_populates='user')  # Relación de uno a uno con la entidad Email
-    posts = relationship('Post', back_populates='user')  # Uno a muchos: Un usuario puede tener muchos posts
+    email_id = Column(Integer, ForeignKey('email.id'), unique=True, nullable=False)  # Cambiado a unique=True
+    email = relationship('Email', back_populates='user', uselist=False)  # Relación de uno a uno con la entidad Email
 
 # Entidad Follower: Representa la relación de seguimiento entre usuarios
 class Follower(Base):
@@ -61,6 +60,7 @@ try:
 except Exception as e:
     print("There was a problem generating the diagram")
     raise e
+
 
 
 
